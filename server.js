@@ -13,12 +13,14 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const hbs = exphbs.create({ helpers });
+//const hbs = exphbs.create({ helpers });
 
 // Configure and link a session object with the sequelize store
 const sess = {
   secret: process.env.SECRET,
-  cookie: {},
+  cookie: {
+    expires: 22 * 60 * 1000 //session expires after 22 minutes
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
@@ -37,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
-
+//sync sequalize w/ db then start server operation
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
