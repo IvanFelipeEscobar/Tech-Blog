@@ -1,14 +1,10 @@
 const router = require('express').Router()
 const sequelize = require('../config/connection')
 const { Post, User, Comment } = require('../models')
-const withAuth = require(`../utils/auth`)
 //route to populate homepage with existing post
-router.get(`/`, withAuth, async (req, res) => {
+router.get(`/`, async (req, res) => {
     try {
         const dbPostData = await Post.findAll({
-            where: {
-                user_id: req.session.user_id
-            },
             attributes: [`id`, `title`, `created_at`, `post_content`],
             include: [
                 {
@@ -26,7 +22,7 @@ router.get(`/`, withAuth, async (req, res) => {
             ]
         })
         const postData = dbPostData.map(post => post.get({ plain: true }))
-        res.render(`dashboard`, {postData,
+        res.render(`main`, {postData,
         loggedIn: req.session.loggedIn})
         
     } catch (err) {
@@ -34,6 +30,9 @@ router.get(`/`, withAuth, async (req, res) => {
         res.status(500).json(err);
     }
 })
-
-//
 module.exports = router
+//login route
+
+//signup route
+
+//single post route
