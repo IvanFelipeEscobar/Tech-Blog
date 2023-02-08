@@ -1,0 +1,21 @@
+
+<div class="card-header">
+    <a href="/dashboard/create"><button type="submit" class="btn btn-dark mb-3 d-flex">Create New Post</button></a>
+    <br>
+       Your Posts:
+</div>
+  <div class="card-body">
+    
+    {{#if posts.length}}
+
+  
+    {{#each posts as |post|}}
+      {{> indPost post}}
+    {{/each}}
+    </div>
+    {{else}}
+    <h5 class="card">No post available for display. Posts you create will be displayed here</h5>
+    {{/if}}
+</div>
+
+<script src="/js/addPost.js"></script>

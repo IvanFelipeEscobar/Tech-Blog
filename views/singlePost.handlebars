@@ -1,0 +1,16 @@
+{{> indPost post}}
+
+{{#if Login}}
+<form class="card-body">
+          <div class="mb-3">
+            <label for="newComment" class="form-label">comment: </label>
+            <textarea class="form-control" id="newComment" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-dark mb-3">Submit</button>
+</form>
+{{else}}
+<p>you must be signed in to add or view comments</p>
+{{> indComment post.comment}}
+{{/if}}
+
+<script src="/javascript/comment.js"></script>
