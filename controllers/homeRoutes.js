@@ -71,9 +71,12 @@ router.get(`/post/:id`, async (req, res) => {
                 }
             ]
         })
+        if(!dbPostData){
+            res.status(404).json({message: `no post found`})
+        }
         const post = dbPostData.map(post => post.get({ plain: true }))
         res.render(`singlePost`, {post,
-        login: req.session.login})
+        loggedIn: req.session.loggedIn})
         
     } catch (err) {
         console.log(err);

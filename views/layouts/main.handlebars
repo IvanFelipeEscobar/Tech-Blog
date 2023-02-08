@@ -19,7 +19,7 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
-              {{#if login}}
+              {{#if loggedIn}}
               <li class="nav-item">
                 <a class="nav-link" href="/dasboard">Dashboard</a>
               </li>             
@@ -39,7 +39,7 @@
       <main>
         {{{body}}}
       </main>
-      {{#if login}}
+      {{#if loggedIn}}
 <script src="/javascript/logout.js"></script>
 {{/if}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

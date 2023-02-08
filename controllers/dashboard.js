@@ -25,8 +25,8 @@ router.get(`/`, withAuth, async (req, res) => {
                 }
             ]
         })
-        const postData = dbPostData.map(post => post.get({ plain: true }))
-        res.render(`dashboard`, {postData,
+        const posts = dbPostData.map(post => post.get({ plain: true }))
+        res.render(`dashboard`, {posts,
         loggedIn: req.session.loggedIn})
         
     } catch (err) {
