@@ -1,0 +1,20 @@
+ <div class="card">
+        <h5 class="card-header">Edit Your Post</h5>
+        <form class="card-body">
+          <div class="mb-3">
+            <label for="postTitle" class="form-label">Post Title:</label>
+            <input type="text" class="form-control" id="postTitle" value="{{post.post_title}}">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" id="newPost" rows="3" value="{{post.post_content}}"></textarea>
+          </div>
+
+            <h6 class="card-footer">Created by: {{user.username}} @ {{created_at}}</h6>
+          <button type="submit" class="btn btn-dark mb-3">Edit Post</button>
+          <button type="button" class="btn btn-dark mb-3">Delete Post</button>
+        </form>
+      </div>
+
+<script src="/javascript/addPost.js"></script>
+<script src="/javascript/deletePost.js"></script>
+<script src="/javascript/comment.js"></script>
