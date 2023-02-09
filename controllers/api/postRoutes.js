@@ -58,3 +58,47 @@ router.get(`/:id`, async (req, res) => {
     }
 })
 
+router.post(`/`, withAuth, async (req, res) => {
+    try {
+        const dbCreatePost = await Post.create({
+            post_title: req.body.post_title,
+            post_content: req.body.post_content,
+            user_id: req.body.user_id
+        })
+        res.json(dbCreatePost)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+router.put(`/:id`, withAuth, async (req, res) => {
+    try {
+        const dbPostUpdate = await Post.update( req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+        if(!dbPostUpdate){
+            res.status(404).json({message: `post not found`})
+        }
+        res.json(dbPostUpdate)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+router.delete(`/:id`, withAuth, async (req, res) => {
+    try {
+        const dbPostDelete = await Post.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        if(!dbPostDelete) {
+            res.status(404).json({message: `user not found`})
+        }
+        res.json(dbPostDelete)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
