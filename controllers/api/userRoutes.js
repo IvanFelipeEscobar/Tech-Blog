@@ -2,7 +2,7 @@ const router = require(`express`).Router()
 const sequelize = require(`../../config/connection`)
 const { User, Post, Comment } = require(`../../models`)
 const withAuth = require(`../../utils/auth`)
-
+//api/user
 router.get(`/`, async (req, res) => {
     try {
     const dbData = await User.findAll({
@@ -14,7 +14,7 @@ router.get(`/`, async (req, res) => {
         res.status(500).json(err)
     }
 })
-
+//api/user/id# 
 router.get(`/:id`, async (req,res) => {
     try {
         const dbByID = await User.findOne({
