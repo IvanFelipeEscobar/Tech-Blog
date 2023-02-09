@@ -14,7 +14,7 @@ const submitForm = async (event) => {
         })
     newUser.ok?
         document.location.replace(`/dashboard`) :
-        alert(`failed to sign up, try again`)
+        console.log(newUser.statusText)
     }
 }
  signupForm.addEventListener(`submit`, submitForm)

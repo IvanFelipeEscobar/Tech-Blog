@@ -10,8 +10,9 @@ const userLogin = async (event) => {
         })
         response.ok ?
         document.location.replace(`/dashboard`) :
-        alert(`failed to log in, try again`)
+       console.log(response.statusText)
 
     }
 }
 document.getElementById(`loginSubmit`).addEventListener(`submit`, userLogin)
+

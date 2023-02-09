@@ -35,7 +35,7 @@ router.get(`/`, withAuth, async (req, res) => {
     }
 })
 
-//edit post route
+//dashboard/edit/:id post route
 router.get(`/edit/id:`, withAuth, async (req, res) => {
     try {
         const dbData = await Post.findOne({
@@ -69,7 +69,7 @@ router.get(`/edit/id:`, withAuth, async (req, res) => {
         
     }
 })
-//create post
+//dashboard/create post route
 router.get(`/create`, (req, res) => res.render(`createPost`))
 
 module.exports = router
