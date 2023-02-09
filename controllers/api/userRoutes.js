@@ -44,7 +44,7 @@ router.get(`/:id`, async (req,res) => {
         
     } catch (err) { res.status(500).json(err)}
 })
-
+//api/user
 router.post(`/`, async (req, res) => {
    try {
     const dbUser = await  User.create({
@@ -58,13 +58,15 @@ router.post(`/`, async (req, res) => {
         req.session.name = dbUser.name;
         req.session.loggedIn = true;
 
+        res.json(dbUser)
+
     })
     
    } catch (err) {
     res.status(500).json(err)
    }
 })
-
+//api/user/login
 router.post(`/login`, async (req, res) => {
      try {
         const userLogin = await User.findOne({
@@ -85,14 +87,14 @@ router.post(`/login`, async (req, res) => {
 
      } catch (err) { res.status(500).json(err)}
 })
-
+//api/user/logout
 router.post('/logout', (req, res) => {
     req.session.loggedIn?
         req.session.destroy(() => {res.status(204).end()}):   
         res.status(404).end();
     
 })
-
+//api/user/:id update route
 router.put(`/:id`, withAuth, async (req, res) => {
     try {
         const dbUpdate = await User.update(req.body, {
@@ -109,7 +111,7 @@ router.put(`/:id`, withAuth, async (req, res) => {
         res.status(500).json(err)
     }
 })
-
+//api/user/:id delete route
 router.delete(`./:id`, withAuth, async (req, res) => {
     try {
         const dbDelete = await User.destroy({
