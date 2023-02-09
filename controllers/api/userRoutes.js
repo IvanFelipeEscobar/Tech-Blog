@@ -1,5 +1,6 @@
 const router = require(`express`).Router()
 const { User, Post, Comment } = require(`../../models`)
+const withAuth = require(`../../utils/auth`)
 
 router.get(`/`, async (req, res) => {
     try {
@@ -84,4 +85,44 @@ router.post(`/login`, async (req, res) => {
      } catch (err) { res.status(500).json(err)}
 })
 
+router.post('/logout', (req, res) => {
+    req.session.loggedIn?
+        req.session.destroy(() => {res.status(204).end()}):   
+        res.status(404).end();
+    
+})
+
+router.put(`/:id`, withAuth, async (req, res) => {
+    try {
+        const dbUpdate = await User.update(req.body, {
+            individualHooks: true,
+            where: {
+                id: req.params.id
+            }
+        })
+        if(!dbUpdate){
+            res.status(404).json({message: `user not found`})
+        }
+        res.json(dbUpdate)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+router.delete(`./:id`, withAuth, async (req, res) => {
+    try {
+        const dbDelete = await User.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        if(!dbDelete){
+            res.status(404).json({message: `user not found`})
+        }
+        res.json(dbDelete)
+        
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
 module.exports = router
