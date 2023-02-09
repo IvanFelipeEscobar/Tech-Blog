@@ -21,8 +21,61 @@ router.get(`/`, async (req, res) => {
                 }
             ]
         })
-        const postData = dbPostData.map(post => post.get({ plain: true }))
-        res.render(`main`, {postData,
+        const posts = dbPostData.map(post => post.get({ plain: true }))
+        res.render(`home`, {posts,
+        login: req.session.login})
+        
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
+
+//login route
+router.get(`/login`, (req, res) =>{
+    if(req.session.login){
+        res.redirect(`/`)
+        return
+    }
+    res.render(`login`)
+})
+//signup route
+router.get(`/signup`, (req, res) =>{
+    if(req.session.login){
+        res.redirect(`/`)
+        return
+    }
+    res.render(`signup`)
+})
+
+//single post route
+router.get(`/post/:id`, async (req, res) => {
+    try {
+        const dbPostData = await Post.findOne({
+            where: {
+                id: req.params.id
+            },
+            attributes: [`id`, `title`, `created_at`, `post_content`],
+            include: [
+                {
+                    model: Comment,
+                    attributes: [`id`, `comment_content`, `post_id`, `user_id`, `created_at`],
+                    include: {
+                        model: User,
+                        attributes: `name`
+                    }
+                },
+                {
+                    model: User,
+                    attributes: `name`
+                }
+            ]
+        })
+        if(!dbPostData){
+            res.status(404).json({message: `no post found`})
+        }
+        const post = dbPostData.map(post => post.get({ plain: true }))
+        res.render(`singlePost`, {post,
         loggedIn: req.session.loggedIn})
         
     } catch (err) {
@@ -30,9 +83,6 @@ router.get(`/`, async (req, res) => {
         res.status(500).json(err);
     }
 })
+
+
 module.exports = router
-//login route
-
-//signup route
-
-//single post route

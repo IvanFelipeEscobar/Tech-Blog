@@ -2,7 +2,7 @@ const router = require('express').Router()
 const sequelize = require('../config/connection')
 const { Post, User, Comment } = require('../models')
 const withAuth = require(`../utils/auth`)
-//route to populate homepage with existing post
+//route to populate dashboard with existing user post
 router.get(`/`, withAuth, async (req, res) => {
     try {
         const dbPostData = await Post.findAll({
@@ -25,8 +25,8 @@ router.get(`/`, withAuth, async (req, res) => {
                 }
             ]
         })
-        const postData = dbPostData.map(post => post.get({ plain: true }))
-        res.render(`dashboard`, {postData,
+        const posts = dbPostData.map(post => post.get({ plain: true }))
+        res.render(`dashboard`, {posts,
         loggedIn: req.session.loggedIn})
         
     } catch (err) {
@@ -35,5 +35,41 @@ router.get(`/`, withAuth, async (req, res) => {
     }
 })
 
-//
+//edit post route
+router.get(`/edit/id:`, withAuth, async (req, res) => {
+    try {
+        const dbData = await Post.findOne({
+            where: {
+                id: req.params.id
+            },
+            attributes: [`id`, `title`, `created_at`, `post_content`],
+            include: [
+                {
+                    model: Comment,
+                    attributes: [`id`, `comment_content`, `post_id`, `user_id`, `created_at`],
+                    include: {
+                        model: User,
+                        attributes: `name`
+                    }
+                },
+                {
+                    model: User,
+                    attributes: `name`
+                }
+            ]
+        })
+        if(!dbData){
+            res.status(404).json({message: `no post found`})
+        }
+        const post = dbData.get({ plain: true })
+        res.render(`editPost`, {post, loggedIn: req.session.loggedIn})
+        
+    } catch (err) {
+        res.status(500).json(err)
+        
+    }
+})
+//create post
+router.get(`/create`, (req, res) => res.render(`createPost`))
+
 module.exports = router
