@@ -33,19 +33,15 @@ router.get(`/`, async (req, res) => {
 
 //login route
 router.get(`/login`, (req, res) =>{
-    if(req.session.loggedIn){
-        res.redirect(`/`)
-        return
-    }
-    res.render(`login`)
+    req.session.loggedIn?
+        res.redirect(`/`) :
+        res.render(`login`)
 })
 //signup route
 router.get(`/signup`, (req, res) =>{
-    if(req.session.loggedIn){
-        res.redirect(`/`)
-        return
-    }
-    res.render(`signup`)
+    req.session.loggedIn?
+        res.redirect(`/`) :
+        res.render(`signup`)
 })
 
 //single post route
@@ -75,6 +71,7 @@ router.get(`/post/:id`, async (req, res) => {
             res.status(404).json({message: `no post found`})
         }
         const post = dbPostData.get({ plain: true })
+        console.log(post)
         res.render(`singlePost`, {post,
         loggedIn: req.session.loggedIn})
         
