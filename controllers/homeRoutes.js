@@ -55,7 +55,7 @@ router.get(`/post/:id`, async (req, res) => {
             where: {
                 id: req.params.id
             },
-            attributes: [`id`, `title`, `created_at`, `post_content`],
+            attributes: [`id`, `post_title`, `created_at`, `post_content`],
             include: [
                 {
                     model: Comment,
@@ -74,7 +74,7 @@ router.get(`/post/:id`, async (req, res) => {
         if(!dbPostData){
             res.status(404).json({message: `no post found`})
         }
-        const post = dbPostData.map((post) => post.get({ plain: true }))
+        const post = dbPostData.get({ plain: true })
         res.render(`singlePost`, {post,
         loggedIn: req.session.loggedIn})
         

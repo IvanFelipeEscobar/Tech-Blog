@@ -9,7 +9,7 @@ router.get(`/`, withAuth, async (req, res) => {
             where: {
                 user_id: req.session.user_id
             },
-            attributes: [`id`, `title`, `created_at`, `post_content`],
+            attributes: [`id`, `post_title`, `created_at`, `post_content`],
             include: [
                 {
                     model: Comment,
@@ -69,6 +69,6 @@ router.get(`/edit/id:`, withAuth, async (req, res) => {
     }
 })
 //dashboard/create post route
-router.get(`/create`, withAuth, (req, res) => res.render(`createPost`))
+router.get(`/create`, withAuth, (req, res) => res.render(`createPost`, {loggedIn: req.session.loggedIn}))
 
 module.exports = router

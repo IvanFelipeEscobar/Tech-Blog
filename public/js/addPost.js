@@ -1,12 +1,12 @@
 const createPost = async (event) => {
     event.preventDefault()
 
-    const title = document.getElementById(`postTitle`).value
+    const post_title = document.getElementById(`postTitle`).value
     const post_content = document.getElementById(`newPost`).value
 
-    const postData = await fetch(`api/post`, {
+    const postData = await fetch(`/api/posts`, {
         method: `POST`,
-        body: JSON.stringify({title, post_content}),
+        body: JSON.stringify({post_title, post_content}),
         headers: { 'Content-Type': 'application/json'}
     })
     postData.ok ?
@@ -14,4 +14,4 @@ const createPost = async (event) => {
     console.log(postData.statusText)
 }
 
-document.getElementById(`postSubmit`).addEventListener(`submit`, createPost)
+document.getElementById(`postSubmit`).addEventListener(`click`, createPost)

@@ -32,7 +32,7 @@ router.get(`/:id`, async (req,res) => {
                     attributes: [`id`, `comment_content`, `created_at`],
                     include: {
                         model: Post,
-                        attributes: `post_title`
+                        attributes: [`post_title`]
                     }
                 }
             ]
@@ -78,7 +78,7 @@ router.post(`/login`, async (req, res) => {
             res.status(404).json({message: `user not found`})
             return
         }
-        const verifyPassword = await userLogin.checkPassword(req.body.password)
+        const verifyPassword =  userLogin.checkPassword(req.body.password)
         if(!verifyPassword){
             res.status(400).json({message: `Password is incorrect`})
             return
