@@ -1,11 +1,12 @@
 {{> indPost post}}
 
 {{#if loggedIn}}
+<br>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
   add Comment
 </button>
-
+<br>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -26,16 +27,10 @@
     </div>
   </div>
 </div>
-<form class="card-body">
-          <div class="mb-3">
-            <label for="newComment" class="form-label">comment: </label>
-            <textarea class="form-control" id="newComment" rows="3"></textarea>
-          </div>
-          <button class="btn btn-dark mb-3" id="commentSubmit">Submit</button>
-</form>
 {{else}}
 <p>you must be signed in to add or view comments</p>
 {{/if}}
+<br>
 {{> indComment post.comments}}
 
 <script src="/js/addComment.js"></script>
