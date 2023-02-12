@@ -16,18 +16,17 @@ router.get(`/`, withAuth, async (req, res) => {
                     attributes: [`id`, `comment_content`, `post_id`, `user_id`, `created_at`],
                     include: {
                         model: User,
-                        attributes: `name`
+                        attributes: [`name`]
                     }
                 },
                 {
                     model: User,
-                    attributes: `name`
+                    attributes: [`name`]
                 }
             ]
         })
         const posts = dbPostData.map(post => post.get({ plain: true }))
-        res.render(`dashboard`, {posts,
-        loggedIn: req.session.loggedIn})
+        res.render(`dashboard`, {posts, loggedIn: req.session.loggedIn})
         
     } catch (err) {
         console.log(err);
@@ -49,12 +48,12 @@ router.get(`/edit/id:`, withAuth, async (req, res) => {
                     attributes: [`id`, `comment_content`, `post_id`, `user_id`, `created_at`],
                     include: {
                         model: User,
-                        attributes: `name`
+                        attributes: [`name`]
                     }
                 },
                 {
                     model: User,
-                    attributes: `name`
+                    attributes: [`name`]
                 }
             ]
         })
@@ -70,6 +69,6 @@ router.get(`/edit/id:`, withAuth, async (req, res) => {
     }
 })
 //dashboard/create post route
-router.get(`/create`, (req, res) => res.render(`createPost`))
+router.get(`/create`, withAuth, (req, res) => res.render(`createPost`))
 
 module.exports = router

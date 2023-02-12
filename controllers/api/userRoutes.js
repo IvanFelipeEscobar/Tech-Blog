@@ -74,12 +74,19 @@ router.post(`/login`, async (req, res) => {
                 email: req.body.email
             }
         })
-        if(!userLogin){res.status(404).json({message: `user not found`})}
-        const verifyPassword = userLogin.checkPassword(req.body.password)
-        if(!verifyPassword){res.status(400).json({message: `Password is incorrect`})}
+        if(!userLogin){
+            res.status(404).json({message: `user not found`})
+            return
+        }
+        const verifyPassword = await userLogin.checkPassword(req.body.password)
+        if(!verifyPassword){
+            res.status(400).json({message: `Password is incorrect`})
+            return
+        }
+       
         req.session.save( () => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
+        req.session.user_id = userLogin.id;
+        req.session.username = userLogin.name;
         req.session.loggedIn = true;
 
         res.json({user: userLogin, message: `you are now logged in`})

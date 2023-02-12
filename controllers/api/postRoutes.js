@@ -95,7 +95,7 @@ router.delete(`/:id`, withAuth, async (req, res) => {
             }
         })
         if(!dbPostDelete) {
-            res.status(404).json({message: `user not found`})
+            res.status(404).json({message: `post not found`})
         }
         res.json(dbPostDelete)
     } catch (err) {

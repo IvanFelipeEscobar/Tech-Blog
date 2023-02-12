@@ -1,0 +1,14 @@
+<div class="card">
+    <h2>Welcome to Tech-Blog!</h2>
+{{#if posts.length}}
+{{#each posts as |post|}}
+<div class="post">
+    {{> indPost post}}
+</div>
+{{/each}}
+{{else}}
+<div>
+    no post available yet
+</div>
+{{/if}}
+</div>
