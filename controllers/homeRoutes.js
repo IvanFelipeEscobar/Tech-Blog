@@ -5,25 +5,25 @@ const { Post, User, Comment } = require('../models')
 router.get(`/`, async (req, res) => {
     try {
         const dbPostData = await Post.findAll({
-            attributes: [`id`, `title`, `created_at`, `post_content`],
+            attributes: [`id`, `post_title`, `created_at`, `post_content`],
             include: [
                 {
                     model: Comment,
                     attributes: [`id`, `comment_content`, `post_id`, `user_id`, `created_at`],
                     include: {
                         model: User,
-                        attributes: `name`
+                        attributes: [`name`]
                     }
                 },
                 {
                     model: User,
-                    attributes: `name`
+                    attributes: [`name`]
                 }
             ]
         })
-        const posts = dbPostData.map(post => post.get({ plain: true }))
-        res.render(`home`, {posts,
-        login: req.session.login})
+        const posts = dbPostData.map((post) => post.get({ plain: true }))
+        res.render(`homepage`, { posts,
+            loggedIn: req.session.loggedIn })
         
     } catch (err) {
         console.log(err);
@@ -33,19 +33,15 @@ router.get(`/`, async (req, res) => {
 
 //login route
 router.get(`/login`, (req, res) =>{
-    if(req.session.login){
-        res.redirect(`/`)
-        return
-    }
-    res.render(`login`)
+    req.session.loggedIn?
+        res.redirect(`/`) :
+        res.render(`login`)
 })
 //signup route
 router.get(`/signup`, (req, res) =>{
-    if(req.session.login){
-        res.redirect(`/`)
-        return
-    }
-    res.render(`signup`)
+    req.session.loggedIn?
+        res.redirect(`/`) :
+        res.render(`signup`)
 })
 
 //single post route
@@ -55,26 +51,27 @@ router.get(`/post/:id`, async (req, res) => {
             where: {
                 id: req.params.id
             },
-            attributes: [`id`, `title`, `created_at`, `post_content`],
+            attributes: [`id`, `post_title`, `created_at`, `post_content`],
             include: [
                 {
                     model: Comment,
                     attributes: [`id`, `comment_content`, `post_id`, `user_id`, `created_at`],
                     include: {
                         model: User,
-                        attributes: `name`
+                        attributes: [`name`]
                     }
                 },
                 {
                     model: User,
-                    attributes: `name`
+                    attributes: [`name`]
                 }
             ]
         })
         if(!dbPostData){
             res.status(404).json({message: `no post found`})
         }
-        const post = dbPostData.map(post => post.get({ plain: true }))
+        const post = dbPostData.get({ plain: true })
+        console.log(post)
         res.render(`singlePost`, {post,
         loggedIn: req.session.loggedIn})
         

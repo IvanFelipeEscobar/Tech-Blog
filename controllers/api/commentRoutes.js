@@ -1,6 +1,6 @@
 const router = require(`express`).Router()
 const sequelize = require(`../../config/connection`)
-const { User, Post, Comment } = require(`../../models`)
+const { Comment } = require(`../../models`)
 const withAuth = require(`../../utils/auth`)
 //api/comments
 router.get(`/`, withAuth, async (req, res) => {
@@ -29,11 +29,11 @@ router.get(`/:id`, withAuth, async (req, res) => {
 router.post(`/`, withAuth, async (req, res) => {
     try {
         const dbCreateComment = await Comment.create({
-            where: {
+            
                 comment_content: req.body.comment_content,
                 post_id: req.body.post_id,
                 user_id: req.session.user_id
-            }
+            
         })
         res.json(dbCreateComment)
     } catch (err) {

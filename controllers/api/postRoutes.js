@@ -10,14 +10,14 @@ router.get(`/`, async (req, res) => {
             order: [['created_at', 'DESC']],
             include:[ {
                 model:User,
-                attributes: `name`
+                attributes: [`name`]
             },
             {
                 model: Comment,
                 attributes: [`id`, `user_id`, `post_id`, `comment_content`, `created_at`],
                 include: {
                     model: User,
-                    attributes: `name`
+                    attributes: [`name`]
                 }
             }]
         })
@@ -37,14 +37,14 @@ router.get(`/:id`, async (req, res) => {
             order: [['created_at', 'DESC']],
             include:[ {
                 model: User,
-                attributes: `name`
+                attributes: [`name`]
             },
             {
                 model: Comment,
                 attributes: [`id`, `user_id`, `post_id`, `comment_content`, `created_at`],
                 include: {
                     model: User,
-                    attributes: `name`
+                    attributes: [`name`]
                 }
             }]
         })
@@ -63,7 +63,7 @@ router.post(`/`, withAuth, async (req, res) => {
         const dbCreatePost = await Post.create({
             post_title: req.body.post_title,
             post_content: req.body.post_content,
-            user_id: req.body.user_id
+            user_id: req.session.user_id
         })
         res.json(dbCreatePost)
     } catch (err) {
@@ -95,7 +95,7 @@ router.delete(`/:id`, withAuth, async (req, res) => {
             }
         })
         if(!dbPostDelete) {
-            res.status(404).json({message: `user not found`})
+            res.status(404).json({message: `post not found`})
         }
         res.json(dbPostDelete)
     } catch (err) {
