@@ -35,13 +35,13 @@ router.get(`/`, withAuth, async (req, res) => {
 })
 
 //dashboard/edit/:id post route
-router.get(`/edit/id:`, withAuth, async (req, res) => {
+router.get(`/edit/:id`, withAuth, async (req, res) => {
     try {
         const dbData = await Post.findOne({
             where: {
                 id: req.params.id
             },
-            attributes: [`id`, `title`, `created_at`, `post_content`],
+            attributes: [`id`, `post_title`, `created_at`, `post_content`],
             include: [
                 {
                     model: Comment,
