@@ -8,7 +8,7 @@ Tech blog is a full stack web application in which users can create an account a
 
 To use web application simply visit the deployed site at: [Tech Blog](https://technology-blog-spot.herokuapp.com/)
 
-Returning users can cimply log in, new users can easily create a new account by clicking sign up link
+Returning users can simply log in, new users can easily create a new account by clicking sign up link
 
 [GitHub Repo](https://github.com/IvanFelipeEscobar/Tech-Blog)
 
