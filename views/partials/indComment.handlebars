@@ -1,10 +1,9 @@
-<div class="comments">
+
     {{#each this}}
-    <div class="card">
+    <div class="card ms-auto mt-1 text-bg-secondary comment">
         <div class="card-body">
         <p class="card-text">{{comment_content}}</p> 
         </div>
     <h6 class="card-footer">Created by: {{user.name}} @ {{format_date created_at}}</h6>
     </div>
     {{/each}}
-</div>

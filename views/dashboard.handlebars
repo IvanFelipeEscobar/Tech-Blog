@@ -1,21 +1,26 @@
-<br>
-<div class="card-header">
+<div class="container p-2">
+<div class="hero">
+  <h1>Dashboard</h1>
+  <p>This section contains all the posts made by this user. To edit or delete a post simply click on the post</p>
+</div>
+<div class="post-title">
     <a href="/dashboard/create"><button type="submit" class="btn btn-dark mb-3 d-flex">Create New Post</button></a>
-    <br>
-       Your Posts:
-
-  <div class="card-body">
+     <h2>Your Posts:</h2> 
+</div>
     
     {{#if posts.length}}
 
   
     {{#each posts as |post|}}
+    <div class="post">
       {{> dashPost post}}
-    {{/each}}
     </div>
+    {{/each}}
+    
     {{else}}
     <h5 class="card">No post available for display. Posts you create will be displayed here</h5>
     {{/if}}
-  </div>
+ 
   
+
 </div>

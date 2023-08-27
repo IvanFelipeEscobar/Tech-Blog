@@ -1,7 +1,18 @@
 * {
     box-sizing: border-box;
 }
-.post {
+/* .post {
+    color: aqua;
     padding: 1rem;
-}
+} */
 
+.hero, .post-title  {
+text-align: center;
+}
+.post-title>a{
+display: inline-block;
+}
+.comment {
+width: 20rem;
+
+}

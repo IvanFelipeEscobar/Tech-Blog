@@ -1,3 +1,4 @@
+<div class="container">
 {{> indPost post}}
 
 {{#if loggedIn}}
@@ -30,7 +31,7 @@
 {{else}}
 <p>you must be signed in to add or view comments</p>
 {{/if}}
-<br>
 {{> indComment post.comments}}
+</div>
 
 <script src="/js/addComment.js"></script>
